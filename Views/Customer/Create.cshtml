@@ -1,0 +1,113 @@
+﻿@*@model Customer_Repo_Pattern.Models.Customer
+
+<style>
+    /* Common styles for all screen sizes */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    /* Label styles */
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    /* Input styles */
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+</style>
+
+<h2>Create</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="FirstName">First Name</label>
+        <input type="text" maxlength="15" asp-for="FirstName" class="form-control" required />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName">Last Name</label>
+        <input type="text" maxlength="15" asp-for="LastName" class="form-control" required />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email">Email</label>
+        <input type="email" maxlength="30" asp-for="Email" class="form-control" required />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber">Phone Number</label>
+        <input type="tel" maxlength="10" asp-for="PhoneNumber" class="form-control" required />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+*@
+
+@model Customer_Repo_Pattern.Models.Customer
+
+<style>
+    /* Common styles for all screen sizes */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    /* Label styles */
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    /* Input styles */
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+</style>
+
+<h2>Create Customer</h2>
+
+<form asp-action="Create" method="post" onsubmit="showSuccessAlert()">
+    @*<div class="form-group">
+        <label asp-for="FirstName">First Name</label>
+        <input type="text" maxlength="15" asp-for="FirstName" class="form-control" required />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>*@
+    <div class="form-group">
+        <label asp-for="FirstName">First Name</label>
+        <input type="text" maxlength="15" asp-for="FirstName" class="form-control" required pattern="[A-Za-z]+" title="Please enter only letters" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LastName">Last Name</label>
+        <input type="text" maxlength="15" asp-for="LastName" class="form-control" required pattern="[A-Za-z]+" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email">Email</label>
+        <input type="email" maxlength="30" asp-for="Email" class="form-control" required />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber">Phone Number</label>
+        <input type="number" maxlength="10" asp-for="PhoneNumber" class="form-control" required />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+
+</form>
+
+<script>
+    function showSuccessAlert() {
+        alert('are you want to Add customers !');
+    }
+</script>
+

@@ -1,0 +1,147 @@
+﻿@model IEnumerable<Customer_Repo_Pattern.Models.Customer>
+@{
+    ViewData["Title"] = "List Of Customer";
+
+    Pager pager=new Pager();
+    int pageNo = 0;
+    if(ViewBag.Pager!=null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+
+}
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .btn-info {
+        display: inline-block;
+        padding: 10px 15px;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        background-color: #5bc0de;
+        color: #fff;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+        .btn-info:hover {
+            background-color: #31b0d5;
+            color: #fff;
+        }
+</style>
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.CustomerId</td>
+                <td>@customer.FirstName</td>
+                <td>@customer.LastName</td>
+                <td>@customer.Email</td>
+                <td>@customer.PhoneNumber</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@customer.CustomerId" class="btn btn-info">
+                        <i class="fas fa-edit"></i> Edit
+                    </a> |
+                    <a asp-action="Delete" asp-route-id="@customer.CustomerId" onclick="confirmDelete()" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </a>
+                   @* <a asp-action="Edit" asp-route-id="@customer.CustomerId" class="btn btn-info">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@customer.CustomerId" onclick="confirmDelete()" class="btn btn-danger">Delete</a>*@
+                </td>     
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</div>
+@*<script>
+    function showSuccessAlert() {
+        alert('Delete successful!');
+    }
+</script>
+*@
+@section scripts {
+    <script>
+        function confirmDelete() {
+            // Display confirmation dialog
+            var result = confirm('Are you sure you want to delete this customer?');
+
+            // If user confirms, submit the form for deletion
+            if (result == true) {
+
+                document.querySelector('deleteForm').submit();
+            }
+            else{
+            }
+        }
+    </script>
+}
+
+<div class="container">
+    @if(pager.TotalPages>0)
+    {
+        <ul class="pagination justify-content-end">
+
+            @if (pager.CurrentPage>1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Customer" asp-action="Index" asp-route-pg="1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Customer" asp-action="Index" asp-route-pg="@(pager.CurrentPage-1)">Previous</a>
+                </li>
+
+            }
+
+            @for(var pge=pager.StartPage;pge<=pager.EndPage;pge++)
+            {
+                <li class="page-item @(pge==pager.CurrentPage?"active":"")">
+                    <a class="page-link" asp-controller="Customer" asp-action="Index" asp-route-pg="@pge">@pge></a>
+                </li>
+            }
+            @if(pager.CurrentPage<pager.TotalPages)
+            {
+                 <li class="page-item">
+                    <a class="page-link" asp-controller="Customer" asp-action="Index" asp-route-pg="@(pager.CurrentPage+1)">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Customer" asp-action="Index" asp-route-pg="@(pager.TotalPages)">Last</a>
+                </li>
+                
+            }
+        </ul>
+    }
+</div>
